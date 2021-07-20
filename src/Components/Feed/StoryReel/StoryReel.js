@@ -1,5 +1,5 @@
 import React from "react";
-import Story from "./Story";
+import Story from "./Story/Story";
 import {data} from './data'
 import './StoryReel.css'
 const StoryReel=()=> {
