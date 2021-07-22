@@ -10,8 +10,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import AddIcon from "@material-ui/icons/Add";
 import ForumIcon from "@material-ui/icons/Forum";
+import { useStateValue } from '../../StateProvider';
 import "./Navbar.css";
 function Navbar() {
+  const [{user}, dispatch] = useStateValue();
+  console.log(dispatch);
   return (
     <div className="header">
       <div className="header__left">
@@ -43,8 +46,8 @@ function Navbar() {
       </div>
       <div className="header__right">
         <div className="header__info">
-          <Avatar />
-          <h4>Harsh Sinha</h4>
+          <Avatar src={user.photoURL}/>
+          <h4>{user.displayName}</h4>
         </div>
         <div>
           <IconButton>

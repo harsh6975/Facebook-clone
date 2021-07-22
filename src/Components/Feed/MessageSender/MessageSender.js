@@ -1,49 +1,69 @@
 import React, { useState } from "react";
-import { Avatar } from "@material-ui/core";
-import { InsertEmoticon, PhotoLibrary, Videocam } from "@material-ui/icons";
+import { Avatar } from '@material-ui/core';
+import './MessageSender.css';
+import VideocamIcon from '@material-ui/icons/Videocam';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import {useStateValue} from '../../../StateProvider'
+import db from './../../../Firebase'
+import firebase from '../../../Firebase'
 import "./MessageSender.css";
 
-function MessageSender() {
-  const [input, setInput] = useState("");
-  const [img, setImg] = useState("");
 
+function MessageSender() {
+  const [{user} , dispatch] = useStateValue();
+  const [input, setInput] = useState('');
+  const [inputURL, setInputURL] = useState('');
+  console.log(dispatch);
   const handleSubmit = (e) => {
     e.preventDefault();
-    // db
 
-    setInput("");
+    db.collection('posts').add({
+      message: input,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      profilePic: user.photoURL,
+      username: user.displayName,
+      image: inputURL
+    })
+
+    setInput('');
+    setInputURL('');
   };
+
   return (
     <div className="messageSender">
       <div className="messageSender__top">
-        <Avatar />
+        <Avatar src={user.photoURL}/>
         <form>
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
             type="text"
-            placeholder="What's on your mind"
+            className="messageSender__input"
+            placeholder={`What's on your mind, ${user.displayName}?`}
           />
           <input
-            value={img}
-            onChange={(e) => setImg(e.target.value)}
+            value={inputURL}
+            onChange={(e) => setInputURL(e.target.value)}
             type="text"
-            placeholder="image URL (Optional)"
+            placeholder="Image URL (Optional)"
           />
-          <button onClick={handleSubmit} type="submit"></button>
+          <button onClick={handleSubmit} type="submit">
+            Hidden Button
+          </button>
         </form>
       </div>
       <div className="messageSender__bottom">
         <div className="messageSender__option">
-          <Videocam style={{ color: "red" }} />
+          <VideocamIcon style={{ color: 'red' }} />
           <h3>Live Video</h3>
         </div>
         <div className="messageSender__option">
-          <PhotoLibrary style={{ color: "green" }} />
+          <PhotoLibraryIcon style={{ color: 'green' }} />
           <h3>Photo/Video</h3>
         </div>
         <div className="messageSender__option">
-          <InsertEmoticon style={{ color: "orange" }} />
+          <InsertEmoticonIcon style={{ color: 'orange' }} />
           <h3>Feeling/Activity</h3>
         </div>
       </div>

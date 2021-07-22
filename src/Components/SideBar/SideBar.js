@@ -8,12 +8,15 @@ import {
   VideoLibrary,
 } from "@material-ui/icons";
 import SideBarRow from "./SideBarRow/SideBarRow";
+import { useStateValue } from '../../StateProvider';
 import "./Sidebar.css";
 
 function SideBar() {
+  const [{user},dispatch]=useStateValue();
+  console.log(dispatch);
   return (
     <div className="sidebar">
-      {/* <SideBarRow src={user.photoURL} title={user.displayName}/> */}
+      <SideBarRow src={user.photoURL} title={user.displayName}/>
       <SideBarRow Icon={LocalHospitalOutlined} title="Covid 19 Information" />
       <SideBarRow Icon={EmojiFlags} title="Pages" />
       <SideBarRow Icon={PeopleAlt} title="Friends" />

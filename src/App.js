@@ -5,9 +5,11 @@ import SideBar from "./Components/SideBar/SideBar";
 import "./App.css";
 import Widget from "./Components/Widget/Widget";
 import Login from "./Components/Login/Login";
+import { useStateValue } from './StateProvider';
 
-export default function App() {
-  const user = null;
+function App() {
+  const [{ user }, dispatch] = useStateValue();
+  console.log(dispatch);
   return (
     <div className="app">
       {!user ? (
@@ -25,3 +27,4 @@ export default function App() {
     </div>
   );
 }
+export default App;
